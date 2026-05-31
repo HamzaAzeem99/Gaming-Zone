@@ -1,38 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>PS1 Gaming Zone</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS1 Gaming Zone</title>
 
-<style>
-body{
-    margin:0;
-    background:#000;
-}
-#game{
-    width:100%;
-    height:100vh;
-}
-</style>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #game {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
 
-<div id="game"></div>
+    <div id="game"></div>
 
-<script>
-    EJS_player = "#game";
-    EJS_core = "psx";
-    
-    // 🔥 FIX: Local path ki jagah jsDelivr ka direct raw link use karein
-    EJS_gameUrl = "https://cdn.jsdelivr.net/gh/HamzaAzeem99/Gaming-Zone@main/output.chd";
-    
-    // Extension aur core ko force karne ke liye yeh line lazmi add karein
-    EJS_gameName = "MortalKombat4.chd";
+    <script>
+        // 1. Core and Player Setup
+        EJS_player = "#game";
+        EJS_core = "psx"; // PlayStation 1 core
 
-    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-</script>
+        // 2. 🔥 LANGUAGE BUG FIX: Force emulator to use standard 'en' instead of 'en-GB'
+        EJS_language = "en"; 
 
-<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+        // 3. Game File Paths via jsDelivr CDN (Bypasses GitHub CORS blocks)
+        EJS_gameUrl = "https://cdn.jsdelivr.net/gh/HamzaAzeem99/Gaming-Zone@main/output.chd";
+        EJS_gameName = "MortalKombat4.chd"; // Direct extension enforcement
+
+        // 4. PSX BIOS Configuration
+        EJS_biosUrl = "https://cdn.emulatorjs.org/stable/data/bios/";
+
+        // 5. EmulatorJS Data Engine Path
+        EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+
+        // Optional Performance Tuning
+        EJS_startOnKeypress = true;
+        EJS_FrameSkip = 1;
+        EJS_volume = 0.8;
+    </script>
+
+    <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 </body>
 </html>
