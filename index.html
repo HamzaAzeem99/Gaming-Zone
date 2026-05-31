@@ -20,10 +20,16 @@ body{
 <div id="game"></div>
 
 <script>
-EJS_player = "#game";
-EJS_core = "psx";
-EJS_gameUrl = "output.chd";
-EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    EJS_player = "#game";
+    EJS_core = "psx";
+    
+    // 🔥 FIX: Local path ki jagah jsDelivr ka direct raw link use karein
+    EJS_gameUrl = "https://cdn.jsdelivr.net/gh/HamzaAzeem99/Gaming-Zone@main/output.chd";
+    
+    // Extension aur core ko force karne ke liye yeh line lazmi add karein
+    EJS_gameName = "MortalKombat4.chd";
+
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
 </script>
 
 <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
