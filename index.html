@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ARCADE VAULT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap"
+    rel="stylesheet" />
   <style>
     :root {
       --bg: #05050f;
@@ -14,7 +16,11 @@
       --cyan: #00f5d4;
       --text: #e8e8ff;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -22,22 +28,26 @@
       color: var(--text);
       font-family: 'Rajdhani', sans-serif;
     }
+
     header {
       text-align: center;
       padding: 3rem 1rem 1rem;
     }
+
     header h1 {
       margin: 0;
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(1.7rem, 5vw, 2.6rem);
       color: var(--accent);
-      text-shadow: 0 0 20px rgba(255,45,107,0.8);
+      text-shadow: 0 0 20px rgba(255, 45, 107, 0.8);
     }
+
     header p {
       margin: 14px 0 0;
       color: var(--cyan);
       letter-spacing: 2px;
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -46,6 +56,7 @@
       max-width: 1400px;
       margin: 0 auto;
     }
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -54,11 +65,13 @@
       cursor: pointer;
       transition: 0.25s ease;
     }
+
     .card:hover {
       transform: translateY(-4px) scale(1.02);
       border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(255,45,107,0.35);
+      box-shadow: 0 0 20px rgba(255, 45, 107, 0.35);
     }
+
     .card-thumb {
       width: 100%;
       height: 190px;
@@ -66,13 +79,16 @@
       display: block;
       background: #000;
     }
+
     .card-info {
       padding: 14px;
     }
+
     .card-info h3 {
       margin: 0 0 10px;
       font-size: 1.2rem;
     }
+
     .badge {
       display: inline-block;
       font-size: 0.65rem;
@@ -82,17 +98,22 @@
       background: #222;
       color: #0f0;
     }
+
     #popup {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.97);
+      background: rgba(0, 0, 0, 0.97);
       z-index: 10000;
       align-items: center;
       justify-content: center;
       padding: 12px;
     }
-    #popup.open { display: flex; }
+
+    #popup.open {
+      display: flex;
+    }
+
     #emu-box {
       width: 94vw;
       max-width: 1020px;
@@ -103,6 +124,7 @@
       overflow: hidden;
       position: relative;
     }
+
     .emu-bar {
       padding: 10px 16px;
       background: #0a0a18;
@@ -111,12 +133,14 @@
       align-items: center;
       gap: 12px;
     }
+
     #emu-title {
       color: var(--accent);
       font-family: 'Press Start 2P', monospace;
       font-size: 0.72rem;
       line-height: 1.4;
     }
+
     .quit-btn {
       background: var(--accent);
       color: white;
@@ -127,6 +151,7 @@
       font-size: 0.6rem;
       flex-shrink: 0;
     }
+
     #loading-screen {
       position: absolute;
       inset: 0;
@@ -138,12 +163,14 @@
       gap: 20px;
       z-index: 10;
     }
+
     #loading-screen p {
       color: var(--cyan);
       font-family: 'Press Start 2P', monospace;
       text-align: center;
       padding: 0 12px;
     }
+
     .bar {
       width: min(280px, 70vw);
       height: 12px;
@@ -151,15 +178,18 @@
       border-radius: 6px;
       overflow: hidden;
     }
-    .bar > div {
+
+    .bar>div {
       height: 100%;
       width: 0%;
       background: var(--accent);
       animation: loading 3s linear forwards;
     }
+
     #game-player {
       height: calc(100% - 48px);
     }
+
     .hint {
       max-width: 1400px;
       margin: 0 auto;
@@ -167,135 +197,161 @@
       color: #9aa0d6;
       font-size: 0.95rem;
     }
+
     @keyframes loading {
-      to { width: 95%; }
+      to {
+        width: 95%;
+      }
     }
+
     @media (max-width: 600px) {
-      .grid { padding: 1rem; gap: 16px; }
-      #emu-box { height: 90vh; }
-      #emu-title { font-size: 0.55rem; }
-      .quit-btn { padding: 7px 10px; font-size: 0.5rem; }
+      .grid {
+        padding: 1rem;
+        gap: 16px;
+      }
+
+      #emu-box {
+        height: 90vh;
+      }
+
+      #emu-title {
+        font-size: 0.55rem;
+      }
+
+      .quit-btn {
+        padding: 7px 10px;
+        font-size: 0.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>ARCADE VAULT</h1>
-  <p>INSERT COIN TO CONTINUE</p>
-</header>
+  <header>
+    <h1>ARCADE VAULT</h1>
+    <p>INSERT COIN TO CONTINUE</p>
+  </header>
 
-<div class="hint">
-  All ROMs load from same-origin paths under <code>/roms/</code>, which avoids CORS issues on Vercel.
-</div>
-
-<div class="grid" id="game-grid"></div>
-
-<div id="popup">
-  <div id="emu-box">
-    <div class="emu-bar">
-      <span id="emu-title">LOADING GAME...</span>
-      <button class="quit-btn" onclick="closeGame()">✕ QUIT</button>
-    </div>
-    <div id="loading-screen">
-      <p>LOADING GAME...</p>
-      <div class="bar"><div></div></div>
-    </div>
-    <div id="game-player"></div>
+  <div class="hint">
+    All ROMs load from same-origin paths under <code>/roms/</code>, which avoids CORS issues on Vercel.
   </div>
-</div>
 
-<script>
-const GAMES = [
-  {
-    title: "Mortal Kombat 4",
-    core: "pcsx_rearmed",
-    romUrl: "https://github.com/HamzaAzeem99/games-file-2/releases/download/v1.0.0/mk4.bin",
-    biosUrl: "public/bios/scph5501.bin",
-    badge: "PSX",
-    thumb: "https://cdn.wallpapersafari.com/98/82/dkMfnW.jpg"
-  }
-];
-const grid = document.getElementById('game-grid');
-const popup = document.getElementById('popup');
-const titleEl = document.getElementById('emu-title');
-const loadingScreen = document.getElementById('loading-screen');
-const gamePlayer = document.getElementById('game-player');
+  <div class="grid" id="game-grid"></div>
 
-function renderCards() {
-  grid.innerHTML = '';
-  GAMES.forEach(game => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
+  <div id="popup">
+    <div id="emu-box">
+      <div class="emu-bar">
+        <span id="emu-title">LOADING GAME...</span>
+        <button class="quit-btn" onclick="closeGame()">✕ QUIT</button>
+      </div>
+      <div id="loading-screen">
+        <p>LOADING GAME...</p>
+        <div class="bar">
+          <div></div>
+        </div>
+      </div>
+      <div id="game-player"></div>
+    </div>
+  </div>
+
+  <script>
+    const GAMES = [
+      {
+        title: "Mortal Kombat 4",
+        core: "pcsx_rearmed",
+        // Google Drive Bypass Link
+        romUrl: "games/mk4.zip",
+        biosUrl: "https://drive.google.com/file/d/1UkiHjMAuvxtnhcoQtquBAyI2kyj-GWCL/view?usp=sharing",
+        badge: "PSX",
+        thumb: "https://cdn.wallpapersafari.com/98/82/dkMfnW.jpg"
+      }
+    ];
+    const grid = document.getElementById('game-grid');
+    const popup = document.getElementById('popup');
+    const titleEl = document.getElementById('emu-title');
+    const loadingScreen = document.getElementById('loading-screen');
+    const gamePlayer = document.getElementById('game-player');
+
+    function renderCards() {
+      grid.innerHTML = '';
+      GAMES.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
       <img class="card-thumb" src="${game.thumb}" onerror="this.src='https://picsum.photos/400/190'">
       <div class="card-info">
         <h3>${game.title}</h3>
         <span class="badge">${game.badge}</span>
       </div>
     `;
-    card.onclick = () => playGame(game);
-    grid.appendChild(card);
-  });
-}
+        card.onclick = () => playGame(game);
+        grid.appendChild(card);
+      });
+    }
 
-function loadEmulatorScript() {
-  return new Promise((resolve, reject) => {
-    if (window.__ejsLoaded) return resolve();
-    const existing = document.getElementById('ejs-script');
-    if (existing) existing.remove();
-    const script = document.createElement('script');
-    script.id = 'ejs-script';
-    script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
-    script.crossOrigin = 'anonymous';
-    script.onload = () => {
-      window.__ejsLoaded = true;
-      resolve();
-    };
-    script.onerror = () => reject(new Error('EmulatorJS loader failed'));
-    document.body.appendChild(script);
-  });
-}
+    function loadEmulatorScript() {
+      return new Promise((resolve, reject) => {
+        if (window.__ejsLoaded) return resolve();
+        const existing = document.getElementById('ejs-script');
+        if (existing) existing.remove();
+        const script = document.createElement('script');
+        script.id = 'ejs-script';
+        script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
+        script.crossOrigin = 'anonymous';
+        script.onload = () => {
+          window.__ejsLoaded = true;
+          resolve();
+        };
+        script.onerror = () => reject(new Error('EmulatorJS loader failed'));
+        document.body.appendChild(script);
+      });
+    }
+    async function playGame(g) {
+      popup.classList.add('open');
+      titleEl.textContent = g.title.toUpperCase();
+      loadingScreen.style.display = 'flex';
+      gamePlayer.innerHTML = '';
 
-async function playGame(g) {
-  popup.classList.add('open');
-  titleEl.textContent = g.title.toUpperCase();
-  loadingScreen.style.display = 'flex';
-  gamePlayer.innerHTML = '';
+      // Bilkul sahi aur direct configuration
+      window.EJS_player = "#game-player";
+      window.EJS_core = "pcsx_rearmed"; // Core direct define kiya
+      window.EJS_gameUrl = g.romUrl;
+      window.EJS_gameID = "mk4-psx";
+      window.EJS_gameName = "Mortal Kombat 4"; // Game ka naam specified
+      window.EJS_gameExt = "iso"; // Extension fixed
+      window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+      window.EJS_startOnLoad = true;
 
-  window.EJS_player = "#game-player";
-  window.EJS_core = g.core;
-  window.EJS_gameUrl = g.romUrl;
-  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-  window.EJS_startOnLoad = true;
-  window.EJS_language = "en-US";
+      // Yeh settings menu ko skip karwa kar game load karengi
+      window.EJS_loadContent = true;
+      window.EJS_autoplay = true;
 
-  if (g.biosUrl) window.EJS_biosUrl = g.biosUrl;
-  else delete window.EJS_biosUrl;
+      if (g.biosUrl) window.EJS_biosUrl = g.biosUrl;
 
-  try {
-    await loadEmulatorScript();
-    setTimeout(() => {
+      try {
+        await loadEmulatorScript();
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 1200);
+      } catch (err) {
+        loadingScreen.style.display = 'none';
+        gamePlayer.innerHTML = `<div style="padding:20px;color:#ff8080;font-family:Arial,sans-serif;">Failed to load emulator.</div>`;
+      }
+    }
+    function closeGame() {
+      popup.classList.remove('open');
       loadingScreen.style.display = 'none';
-    }, 1200);
-  } catch (err) {
-    loadingScreen.style.display = 'none';
-    gamePlayer.innerHTML = `<div style="padding:20px;color:#ff8080;font-family:Arial,sans-serif;">Failed to load emulator.</div>`;
-  }
-}
+      gamePlayer.innerHTML = '';
+    }
 
-function closeGame() {
-  popup.classList.remove('open');
-  loadingScreen.style.display = 'none';
-  gamePlayer.innerHTML = '';
-}
+    document.addEventListener('keydown', e => {
+      if (e.key === "Escape") closeGame();
+    });
 
-document.addEventListener('keydown', e => {
-  if (e.key === "Escape") closeGame();
-});
-
-renderCards();
-</script>
+    renderCards();
+  </script>
 
 </body>
+
 </html>
