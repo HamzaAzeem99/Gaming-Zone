@@ -1,5 +1,4 @@
-games/*.bin filter=lfs diff=lfs merge=lfs -text
-games/*.cue filter=lfs diff=lfs merge=lfs -text
+public/games/*.bin filter=lfs diff=lfs merge=lfs -text
+public/games/*.cue filter=lfs diff=lfs merge=lfs -text
 *.chd filter=lfs diff=lfs merge=lfs -text
 * text=auto
-*.bin filter=lfs diff=lfs merge=lfs -text

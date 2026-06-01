@@ -210,10 +210,10 @@ const GAMES = [
   {
     title: "Mortal Kombat 4",
     core: "pcsx_rearmed",
-    romUrl: "/games/mk4.bin",
-    biosUrl: "/bios/scph5501.bin",
+    romUrl: "https://archive.org/download/mortal-kombat-4-p-sx-play-station-ps-1/Mortal%20Kombat%204.bin",
+    biosUrl: "public/bios/scph5501.bin",
     badge: "PSX",
-    thumb: "/images/mk4.jpg"
+    thumb: "https://cdn.wallpapersafari.com/98/82/dkMfnW.jpg"
   }
 ];
 const grid = document.getElementById('game-grid');
@@ -247,6 +247,7 @@ function loadEmulatorScript() {
     const script = document.createElement('script');
     script.id = 'ejs-script';
     script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
+    script.crossOrigin = 'anonymous';
     script.onload = () => {
       window.__ejsLoaded = true;
       resolve();
