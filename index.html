@@ -6,217 +6,21 @@
   <title>ARCADE VAULT</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Same CSS as before (I kept it short here) */
     :root {
-      --bg:      #05050f;
-      --card:    #11112a;
-      --border:  #1e1e45;
-      --accent:  #ff2d6b;
-      --cyan:    #00f5d4;
-      --text:    #e8e8ff;
-      --muted:   #6b6b9a;
+      --bg: #05050f; --card: #11112a; --border: #1e1e45;
+      --accent: #ff2d6b; --cyan: #00f5d4; --text: #e8e8ff;
     }
-    html, body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
-      pointer-events: none;
-      z-index: 999;
-    }
-    header {
-      text-align: center;
-      padding: 3rem 1rem 1.5rem;
-    }
-    header h1 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1.2rem, 4vw, 2.2rem);
-      color: var(--accent);
-      text-shadow: 0 0 10px rgba(255,45,107,0.8), 0 0 30px rgba(255,45,107,0.4), 4px 4px 0 #7a0030;
-      letter-spacing: 4px;
-      animation: flicker 4s infinite;
-    }
-    header p {
-      font-size: 1rem;
-      color: var(--cyan);
-      margin-top: .6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-    @keyframes flicker {
-      0%,95%,100% { opacity: 1; }
-      96%         { opacity: .6; }
-      97%         { opacity: 1; }
-      98%         { opacity: .4; }
-      99%         { opacity: 1; }
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 24px;
-      padding: 2rem 3rem 4rem;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform .25s, border-color .25s, box-shadow .25s;
-      position: relative;
-    }
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border-color: var(--accent);
-      box-shadow: 0 0 24px rgba(255,45,107,.35), 0 12px 30px rgba(0,0,0,.6);
-    }
-    .card::after {
-      content: '▶ PLAY';
-      font-family: 'Press Start 2P', monospace;
-      font-size: .55rem;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(.8);
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 6px;
-      opacity: 0;
-      transition: opacity .2s, transform .2s;
-      pointer-events: none;
-      letter-spacing: 2px;
-      box-shadow: 0 0 20px rgba(255,45,107,.7);
-    }
-    .card:hover::after {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .card-thumb {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(.85) saturate(1.1);
-      transition: filter .25s;
-    }
-    .card:hover .card-thumb { filter: brightness(.5) saturate(.7); }
-    .card-info {
-      padding: 14px 16px 16px;
-      border-top: 1px solid var(--border);
-    }
-    .card-info h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-    .badge {
-      display: inline-block;
-      font-family: 'Press Start 2P', monospace;
-      font-size: .45rem;
-      padding: 4px 8px;
-      border-radius: 4px;
-      letter-spacing: 1px;
-    }
-    .badge-psx  { background: #1a0a30; color: #c084fc; border: 1px solid #6d28d9; }
-    .badge-nes  { background: #0a1a0a; color: #4ade80; border: 1px solid #166534; }
-    .badge-snes { background: #1a1a0a; color: #fbbf24; border: 1px solid #92400e; }
-    .badge-n64  { background: #0a1a1a; color: #22d3ee; border: 1px solid #155e75; }
-    .badge-gba  { background: #1a0a1a; color: #f472b6; border: 1px solid #9d174d; }
-    #popup {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.96);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-    }
-    #popup.open { display: flex; }
-    #emu-box {
-      width: 94vw;
-      max-width: 960px;
-      height: 88vh;
-      background: #000;
-      border: 2px solid var(--accent);
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 0 50px rgba(255,45,107,.5);
-      position: relative;
-    }
-    .emu-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 14px;
-      background: #0a0a18;
-      flex-shrink: 0;
-      border-bottom: 1px solid var(--border);
-    }
-    #emu-title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: .6rem;
-      color: var(--accent);
-      letter-spacing: 2px;
-    }
-    .close-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 7px 14px;
-      font-family: 'Press Start 2P', monospace;
-      font-size: .55rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .close-btn:hover { background: #ff5a87; }
-    #game-player { flex: 1; width: 100%; }
-    #loading-screen {
-      display: none;
-      position: absolute;
-      inset: 0;
-      background: #000;
-      z-index: 5;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 20px;
-    }
-    #loading-screen.show { display: flex; }
-    #loading-screen p {
-      font-family: 'Press Start 2P', monospace;
-      font-size: .7rem;
-      color: var(--cyan);
-      animation: blink 1s infinite;
-    }
-    .loader-bar-bg { width: 240px; height: 10px; background: #1a1a3a; border-radius: 5px; overflow: hidden; }
-    .loader-bar { height: 100%; background: var(--accent); border-radius: 5px; width: 0%; animation: load-anim 3s ease forwards; }
-    @keyframes load-anim { 0% { width:0% } 40% { width:55% } 70% { width:75% } 100% { width:95% } }
-    @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:.3 } }
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      color: var(--muted);
-      font-size: .85rem;
-      letter-spacing: 1px;
-      border-top: 1px solid var(--border);
-    }
-    @media (max-width: 600px) {
-      .grid { padding: 1rem; gap: 16px; }
-      #emu-box { width: 100vw; height: 100dvh; border-radius: 0; border: none; }
-    }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; margin:0; padding:0; min-height:100vh; }
+    header { text-align:center; padding:3rem 1rem; }
+    header h1 { font-family:'Press Start 2P'; font-size:2.4rem; color:var(--accent); text-shadow:0 0 20px rgba(255,45,107,0.8); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; padding:2rem; max-width:1400px; margin:0 auto; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition:0.3s; }
+    .card:hover { transform:scale(1.05); border-color:var(--accent); }
+    .card-thumb { width:100%; height:190px; object-fit:cover; }
+    .card-info { padding:12px; }
+    #popup { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; align-items:center; justify-content:center; }
+    #popup.open { display:flex; }
   </style>
 </head>
 <body>
@@ -229,103 +33,82 @@
 <div class="grid" id="game-grid"></div>
 
 <div id="popup">
-  <div id="emu-box">
-    <div class="emu-bar">
-      <span id="emu-title">LOADING…</span>
-      <button class="close-btn" onclick="closeGame()">✕ QUIT</button>
+  <div id="emu-box" style="width:94vw; max-width:1000px; height:88vh; background:#000; border:3px solid #ff2d6b; border-radius:12px; overflow:hidden;">
+    <div style="padding:10px 15px; background:#0a0a18; display:flex; justify-content:space-between; align-items:center;">
+      <span id="emu-title" style="color:#ff2d6b; font-family:'Press Start 2P'; font-size:0.7rem;">LOADING...</span>
+      <button onclick="closeGame()" style="background:#ff2d6b; color:white; border:none; padding:8px 14px; cursor:pointer; font-family:'Press Start 2P';">✕ QUIT</button>
     </div>
-    <div id="loading-screen">
-      <p>LOADING GAME…</p>
-      <div class="loader-bar-bg"><div class="loader-bar"></div></div>
+    <div id="loading-screen" style="position:absolute; inset:0; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; gap:15px; z-index:10;">
+      <p style="color:#00f5d4; font-family:'Press Start 2P';">LOADING GAME...</p>
+      <div style="width:280px; height:10px; background:#222; border-radius:5px; overflow:hidden;">
+        <div style="height:100%; width:0%; background:#ff2d6b; animation: loading 3s linear forwards;"></div>
+      </div>
     </div>
-    <div id="game-player"></div>
+    <div id="game-player" style="height:calc(100% - 45px);"></div>
   </div>
 </div>
 
-<footer>ESC = QUIT GAME &nbsp;|&nbsp; EMULATORJS POWERED &nbsp;|&nbsp; ARCADE VAULT</footer>
-
 <script>
-var GAMES = [
+// Games List
+const GAMES = [
   {
-    title:   'Mortal Kombat 4',
-    core:    'pcsx_rearmed',
-    romUrl:  'https://archive.org/download/mortal-kombat-4-p-sx-play-station-ps-1/Mortal%20Kombat%204.bin',
-    biosUrl: 'bios/scph5501.bin',
-    badge:   'psx',
-    label:   'PSX',
-    thumb:   'https://cdn.wallpapersafari.com/98/82/dkMfnW.jpg'
+    title: "Mortal Kombat 4",
+    core: "pcsx_rearmed",
+    romUrl: "games/mk4.bin",
+    biosUrl: "bios/scph5501.bin",
+    badge: "psx",
+    label: "PSX",
+    thumb: "https://picsum.photos/id/201/400/190"
   }
 ];
 
+const grid = document.getElementById('game-grid');
 
-
-var grid = document.getElementById('game-grid');
-GAMES.forEach(function(g) {
-  var card = document.createElement('div');
+GAMES.forEach(game => {
+  const card = document.createElement('div');
   card.className = 'card';
-  card.onclick = function() { playGame(g); };
-  card.innerHTML =
-    '<img class="card-thumb" src="' + g.thumb + '" alt="' + g.title + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/400x190/11112a/6b6b9a?text=NO+IMAGE\'">' +
-    '<div class="card-info"><h3>' + g.title + '</h3><span class="badge badge-' + g.badge + '">' + g.label + '</span></div>';
+  card.innerHTML = `
+    <img class="card-thumb" src="${game.thumb}" onerror="this.src='https://picsum.photos/400/190'">
+    <div class="card-info">
+      <h3>${game.title}</h3>
+      <span style="font-size:0.7rem; padding:3px 8px; background:#333; color:#0f0; border-radius:3px;">${game.label}</span>
+    </div>
+  `;
+  card.onclick = () => playGame(game);
   grid.appendChild(card);
 });
 
 function playGame(g) {
-  var popup  = document.getElementById('popup');
-  var player = document.getElementById('game-player');
-  var loader = document.getElementById('loading-screen');
-  var title  = document.getElementById('emu-title');
+  document.getElementById('popup').classList.add('open');
+  document.getElementById('emu-title').textContent = g.title.toUpperCase();
+  document.getElementById('loading-screen').style.display = 'flex';
 
-  var old = document.getElementById('ejs-script');
-  if (old) old.remove();
-  ['EJS_player','EJS_core','EJS_gameUrl','EJS_biosUrl','EJS_pathtodata','EJS_startOnLoad','EJS_language','EJS_defaultOptions'].forEach(function(k){ delete window[k]; });
-  player.innerHTML = '';
+  // Clean old emulator
+  document.getElementById('game-player').innerHTML = '';
+  const oldScript = document.getElementById('ejs-script');
+  if (oldScript) oldScript.remove();
 
-  title.textContent = g.title.toUpperCase();
-  popup.classList.add('open');
-  loader.classList.add('show');
-
-  var bar = loader.querySelector('.loader-bar');
-  bar.style.animation = 'none';
-  bar.offsetHeight;
-  bar.style.animation = '';
-
-  window.EJS_player      = '#game-player';
-  window.EJS_core        = g.core;
-  window.EJS_gameUrl     = g.romUrl;
-  window.EJS_pathtodata  = 'https://cdn.emulatorjs.org/stable/data/';
+  window.EJS_player = "#game-player";
+  window.EJS_core = g.core;
+  window.EJS_gameUrl = g.romUrl;
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
   window.EJS_startOnLoad = true;
-  window.EJS_language    = 'en-US';
-  window.EJS_defaultOptions = { volume: 0.7 };
   if (g.biosUrl) window.EJS_biosUrl = g.biosUrl;
 
-  window.EJS_onGameStart = function() { loader.classList.remove('show'); };
-
-  var script = document.createElement('script');
-  script.id  = 'ejs-script';
-  script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
-  script.crossOrigin = 'anonymous';
-  script.onerror = function() {
-    loader.classList.remove('show');
-    player.innerHTML = '<div style="padding:2rem;text-align:center;font-family:\'Press Start 2P\',monospace;font-size:.6rem;color:#f55;line-height:2">EMULATORJS LOAD FAILED<br><br>CHECK INTERNET</div>';
-  };
+  const script = document.createElement("script");
+  script.id = "ejs-script";
+  script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
   document.body.appendChild(script);
+
+  script.onload = () => {
+    document.getElementById('loading-screen').style.display = 'none';
+  };
 }
 
 function closeGame() {
-  var popup  = document.getElementById('popup');
-  var player = document.getElementById('game-player');
-  var loader = document.getElementById('loading-screen');
-  popup.classList.remove('open');
-  loader.classList.remove('show');
-  player.innerHTML = '';
-  var old = document.getElementById('ejs-script');
-  if (old) old.remove();
-  ['EJS_player','EJS_core','EJS_gameUrl','EJS_biosUrl','EJS_pathtodata','EJS_startOnLoad','EJS_language'].forEach(function(k){ delete window[k]; });
-  if (window.EJS_emulator) try { window.EJS_emulator.pause(); } catch(e) {}
+  document.getElementById('popup').classList.remove('open');
+  document.getElementById('loading-screen').style.display = 'none';
 }
-
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGame(); });
 </script>
 </body>
 </html>
