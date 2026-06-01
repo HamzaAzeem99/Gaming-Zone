@@ -250,20 +250,14 @@ var GAMES = [
     title:   'Mortal Kombat 4',
     core:    'pcsx_rearmed',
     romUrl:  'https://archive.org/download/mortal-kombat-4-p-sx-play-station-ps-1/Mortal%20Kombat%204.bin',
-    biosUrl: 'https://raw.githubusercontent.com/Hamzaazeem99/Gaming-Zone/main/bios/scph5501.bin',
+    biosUrl: 'bios/scph5501.bin',
     badge:   'psx',
     label:   'PSX',
     thumb:   'https://cdn.wallpapersafari.com/98/82/dkMfnW.jpg'
   }
 ];
 
-var WORKER_URL = 'https://games.muhammadhamzamuhammadazeem.workers.dev';
 
-function getUrl(url) {
-  if (!url) return null;
-  if (WORKER_URL) return WORKER_URL + '/proxy?url=' + encodeURIComponent(url);
-  return url;
-}
 
 var grid = document.getElementById('game-grid');
 GAMES.forEach(function(g) {
@@ -298,18 +292,19 @@ function playGame(g) {
 
   window.EJS_player      = '#game-player';
   window.EJS_core        = g.core;
-  window.EJS_gameUrl     = getUrl(g.romUrl);
+  window.EJS_gameUrl     = g.romUrl;
   window.EJS_pathtodata  = 'https://cdn.emulatorjs.org/stable/data/';
   window.EJS_startOnLoad = true;
   window.EJS_language    = 'en-US';
   window.EJS_defaultOptions = { volume: 0.7 };
-  if (g.biosUrl) window.EJS_biosUrl = getUrl(g.biosUrl);
+  if (g.biosUrl) window.EJS_biosUrl = g.biosUrl;
 
   window.EJS_onGameStart = function() { loader.classList.remove('show'); };
 
   var script = document.createElement('script');
   script.id  = 'ejs-script';
   script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
+  script.crossOrigin = 'anonymous';
   script.onerror = function() {
     loader.classList.remove('show');
     player.innerHTML = '<div style="padding:2rem;text-align:center;font-family:\'Press Start 2P\',monospace;font-size:.6rem;color:#f55;line-height:2">EMULATORJS LOAD FAILED<br><br>CHECK INTERNET</div>';
