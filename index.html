@@ -186,7 +186,7 @@
 </header>
 
 <div class="hint">
-  This version is ready for Vercel/GitHub Pages. For best results, use ROM URLs you are allowed to host or serve from your own storage.
+  All ROMs load from same-origin paths under <code>/roms/</code>, which avoids CORS issues on Vercel.
 </div>
 
 <div class="grid" id="game-grid"></div>
@@ -208,29 +208,14 @@
 <script>
 const GAMES = [
   {
-    title: "Super Mario Bros",
-    core: "nes",
-    romUrl: "https://your-domain.com/roms/smb.nes",
-    badge: "NES",
-    thumb: "https://picsum.photos/id/1015/400/190"
-  },
-  {
-    title: "Contra",
-    core: "nes",
-    romUrl: "https://your-domain.com/roms/contra.nes",
-    badge: "NES",
-    thumb: "https://picsum.photos/id/201/400/190"
-  },
-  {
     title: "Mortal Kombat 4",
     core: "pcsx_rearmed",
-    romUrl: "https://your-domain.com/roms/mk4.bin",
-    biosUrl: "https://your-domain.com/bios/scph5501.bin",
+    romUrl: "/games/mk4.bin",
+    biosUrl: "/bios/scph5501.bin",
     badge: "PSX",
-    thumb: "https://picsum.photos/id/866/400/190"
+    thumb: "/images/mk4.jpg"
   }
 ];
-
 const grid = document.getElementById('game-grid');
 const popup = document.getElementById('popup');
 const titleEl = document.getElementById('emu-title');
@@ -257,10 +242,8 @@ function renderCards() {
 function loadEmulatorScript() {
   return new Promise((resolve, reject) => {
     if (window.__ejsLoaded) return resolve();
-
     const existing = document.getElementById('ejs-script');
     if (existing) existing.remove();
-
     const script = document.createElement('script');
     script.id = 'ejs-script';
     script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
@@ -286,11 +269,8 @@ async function playGame(g) {
   window.EJS_startOnLoad = true;
   window.EJS_language = "en-US";
 
-  if (g.biosUrl) {
-    window.EJS_biosUrl = g.biosUrl;
-  } else {
-    delete window.EJS_biosUrl;
-  }
+  if (g.biosUrl) window.EJS_biosUrl = g.biosUrl;
+  else delete window.EJS_biosUrl;
 
   try {
     await loadEmulatorScript();
@@ -299,11 +279,7 @@ async function playGame(g) {
     }, 1200);
   } catch (err) {
     loadingScreen.style.display = 'none';
-    gamePlayer.innerHTML = `
-      <div style="padding:20px;color:#ff8080;font-family:Arial,sans-serif;">
-        Failed to load emulator. Check internet/CDN access.
-      </div>
-    `;
+    gamePlayer.innerHTML = `<div style="padding:20px;color:#ff8080;font-family:Arial,sans-serif;">Failed to load emulator.</div>`;
   }
 }
 
